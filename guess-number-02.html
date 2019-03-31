@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="/stylesheets/guess02.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>終極密碼</title>
+</head>
+
+<body class="bg-dark body-guess">
+
+    <div class="container-guess02">
+    <!-- <p class="font-weight-bold text-center mt-5 display-4 text-white-50">終極密碼</p> -->
+    <p class="font-weight-bold text-center mt-5 display-4 text-white-50" id="answer">範圍 : 0~100</p>
+
+    <!-- <div class="container mt-5">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <input type="text" class="form-control text-center"
+                aria-label="Dollar amount (with dot and two decimal places)" id="result" readonly>
+        </div>
+    </div> -->
+
+    <div class="container mt-4">
+        <div class="input-group">
+            <input type="number" id="input" class="btn btn-primary btn-lg bg-dark border-0 
+            text-white mx-auto input" oninput="if(value.length>2)value=value.slice(0,2)" placeholder="0" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
+            <!-- <div class="input-group-append" id="button-addon4">
+                <button class="btn btn-outline-secondary px-3" type="button" onclick="doGuess()" id="guess">猜</button>
+                <button class="btn btn-outline-secondary" type="button" onclick="clearInput()" id="reset">重新開始</button>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row ">
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad bg-dark text-white my-1 py-3 ">1</button>
+            </div>
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad bg-dark text-white my-1 py-3">2</button>
+            </div>
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad  bg-dark text-white my-1 py-3">3</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad bg-dark text-white my-1 py-3">4</button>
+            </div>
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad bg-dark text-white my-1 py-3">5</button>
+            </div>
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad bg-dark text-white my-1 py-3">6</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad bg-dark text-white my-1 py-3">7</button>
+            </div>
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad bg-dark text-white my-1 py-3">8</button>
+            </div>
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad bg-dark text-white my-1 py-3">9</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <button type="button"
+                    class="btn btn-light btn-lg btn-block border bg-transparent text-white my-1 py-3" onclick="clearInput()" id="clearInput"><i class="fas fa-undo"></i></button>
+            </div>     
+            <div class="col-4"><button type="button"
+                    class="btn btn-light btn-lg btn-block border input-pad bg-transparent text-white my-1 py-3">0</button>
+            </div>
+            <div class="col-4">
+                <button type="button"
+                    class="btn btn-light btn-lg btn-block border bg-transparent text-white my-1 py-3" onclick="doGuess()" id="guess"><i class="fas fa-check"></i></button>
+            </div> 
+            
+        </div>
+        <div class="w-100">
+            <button type="button"
+                class="btn btn-light btn-lg btn-block  border-0 bg-transparent text-white mx-auto my-2 py-3" onclick="reset()" id="reset">重新開始</button>
+        </div>
+    </div>
+</div>
+
+    <script>
+        var rnd = Math.random() * 100;
+        var ans = Math.floor(rnd); // 取整數後的答案
+        var min = 0, max = 100;
+        console.log(ans);
+
+
+        // === 重新開始 ===
+        function reset() {
+            var input = document.getElementById("input");
+            var r = "";
+            input.value = r;
+            rnd = Math.random() * 100;
+            ans = Math.floor(rnd);
+            min = 0, max = 100;
+            console.log(ans);
+            var answerText = document.getElementById("answer");
+            answerText.innerHTML ="範圍 : " + min + "~" + max;
+        }
+
+        function clearInput() {
+            var input = document.getElementById("input");
+            var r = "";
+            input.value = r;
+        }
+
+        //  === 按btn -> input ===
+        function inputbtns() {
+            var input = document.getElementById("input");
+            var text = this.innerHTML;
+            // this = btns[i]
+            if(input.value.length<2){
+            input.value += text;
+            }
+        }
+
+        var btns = document.getElementsByClassName("input-pad");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].onclick = inputbtns;
+        }
+
+        function doGuess() {
+            var input = document.getElementById("input").value;
+            if (input == ans) {
+                alert("過關");
+                var r = confirm("再玩一次?");
+                console.log(r);
+                if(r==true){
+                    reset();
+                    return;
+                }
+                
+            }
+            if (input > ans ) {
+                if (input < max) {
+                    // 大於答案 小於100   
+                    max = parseInt(input);
+                }
+            }
+            else if (input < ans) {
+                if (input > min) {
+                    // 小於答案 大於0
+                    min = parseInt(input);
+                }
+            }
+            clearInput();
+            var answerText = document.getElementById("answer");
+            answerText.innerHTML = min + "~" + max;
+            // console.log(answerText.innerHTML);
+            // document.getElementById("result").value = min + "~" + max;
+        }
+
+            document.getElementById("input").onkeyup =
+            function (event) {
+                if (event.keyCode == 13) {
+                    doGuess();
+                }
+            }
+            document.onkeyup=function(event){
+                if(event.keyCode >=48 && event.keyCode<=57){
+                    input.value += (event.keyCode - 48)
+                }
+                if (event.keyCode == 13) {
+                    doGuess();
+                }
+                if (event.keyCode == 8) {
+                    input.value = input.value.substring(0, input.value.length-1);
+                }
+            }
+
+            // document.getElementById("input").onkeyup =
+            // function (event) {
+            //     if (event.key == "Backspace") {
+            //         document.getElementById("reset").click();
+            //     }
+            // }
+    </script>
+
+</body>
+
+</html>

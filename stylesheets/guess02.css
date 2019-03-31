@@ -1,0 +1,30 @@
+.body-index {
+  background: #212127;
+  font-family: Microsoft JhengHei;
+  color: #fff;
+}
+
+.body-index .container {
+  margin-top: 300px;
+}
+
+.body-index a {
+  font-size: 30px;
+}
+
+.body-guess {
+  background: #212127;
+  font-family: Microsoft JhengHei;
+  color: #fff;
+}
+
+.body-guess .input {
+  font-size: 30px;
+}
+
+.body-guess input::-webkit-outer-spin-button,
+.body-guess input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/*# sourceMappingURL=guess02.css.map */

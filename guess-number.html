@@ -127,7 +127,7 @@
               </ul>
               <div class="input-group">
                 <span class="input-group-addon" id="sizing-addon1">猜答案</span>
-                <input id="userGuess" type="text" name="" class="form-control" value="" required="required">
+                <input id="userGuess" type="text" class="form-control" value="" required="required">
                 <span class="input-group-btn">
                   <a id="guess" type="button" class="btn btn-default" onclick="doGuess();">猜!</a>
                 </span>
@@ -222,15 +222,22 @@
       li.className="list-group-item";
       if(a == 4){
         li.innerHTML= '<span class="label label-success">' + a + "A" + b + "B" + '</span>'+ thisRoundAnswer;
+        alert("過關拉~~~!!");
       }
       else{
-        li.innerHTML= '<span class="label label-danger">' + a + "A" + b + "B" + '</span>'+ thisRoundAnswer ;
+        li.innerHTML= '<span class="label label-danger">' + a + "A" + b + "B" + '</span>'+ thisRoundAnswer;
       }
       document.getElementById("guessResults").appendChild(li);
-      
-
       // alert(a + "A" + "" + b + "B" + " / " + answer);
     }
+
+    document.getElementById("userGuess").onkeyup = 
+    function(event){
+      if(event.keyCode == 13){
+        doGuess();
+      }
+    }
+    
     startGame();
   </script>
 
