@@ -280,8 +280,30 @@
     };
 
 
+   //  用AJAX 改成從遠端拿
+    var  url = " https://gist.githubusercontent.com/dinowang/5290d4cebf96a666c29ab0878afeb2f1/raw/d8c778aad172fdf9175e1a1109409ba49d2647b8/ " + name + ".json ";
+    // $.get(url,null,function(result,status,xhr){
+    //  var birthdate = document.getElementById("birthdate").value;
+
+    // },"json");
+
+    $.ajax({
+      type: "get",
+      url: url,
+      //data: "data", 多新增資料給他
+      dataType: "json",
+      error: function (result,status,xhr) {
+        alert(status+"錯了!")
+      },
+      success : function(response){
+        
+      }
+    });
+
+    // ===========================
+
     function doSpilt(totalValue) {
-      // 切割 year + month + date,並計算
+      // 切割 year + month + date 並計算
       var result = 0;
       var spiltValue = totalValue.split("");
       for (var i = 0; i < spiltValue.length; i++) {
@@ -293,7 +315,6 @@
       }
       return parseInt(result);
     }
-
 
     function doAnalysis() {
       var birthdate = document.getElementById("birthdate").value;
@@ -307,7 +328,7 @@
       var totalValue = String(year) + String(month) + String(date);
       var x = doSpilt(totalValue);
       var str = "";
-
+      
       if (month == 3 && date >= 21 || month == 4 && date <= 20) {
         str="aries";
       }
@@ -346,7 +367,7 @@
       out.className = "li-class";
 
       out.innerHTML = '<span class="label label-primary">' + birthdate + '</span>' + '</br>' + '<button type="button" id="deleteButton" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-     '出生的你 : 星座是 ' + horoscopeData[str].name + '</br>' +
+      '出生的你 : 星座是 ' + horoscopeData[str].name + '</br>' +
      [x-1]+'你的生命靈數' +  horoscopeData[str].lookup[x-1];
         
     if (listul.childNodes.length>0){
