@@ -70,69 +70,87 @@
                       <li>補充說明：委外</li>
                       <li>月租：開放月租</li>
                       <li>備註說明：24小時營運 (委外)</li>
-                    </ul> <a href="http://www.google.com/maps?q=新竹市中華路二段545之1號" target="_blank">新竹市中華路二段545之1號</a>                 
+                    </ul> <a href="http://www.google.com/maps?q=新竹市中華路二段545之1號" target="_blank">新竹市中華路二段545之1號</a>
                   </div>
                 </div>
               </div>
             </div>
-          </div>       
-        </div>       
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-
-  <div class="qwe">
-      5
-  </div> 
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script>
     //API 位置：https://buildschool2019api.azurewebsites.net/api/values
     //地圖網址："http://www.google.com/maps?q=新竹市香山區五福路二段707號"
+    $("#parkingLots").html("");
+    var url = "https://buildschool2019api.azurewebsites.net/api/values";
 
-    var url = " https://buildschool2019api.azurewebsites.net/api/values ";
+    $.get(url, null, function (result, status, xhr) {
+      for (var i = 0; i < result.length; i++) {
+          var html =
+            '<div class="panel panel-default" style="height:400px;">\
+            <div class="panel-heading">\
+              <h3 class="panel-title">'+ result[i]["停車場名稱"] + '</h3>\
+            </div>\
+            <div class="panel-body">\
+              <ul class="list-unstyled">\
+                <li>汽車車位數：'+ result[i]["汽車車位數"] + '</li>\
+                <li>機車車位數：'+ result[i]["機車車位數"] + '</li>\
+                <li>營運時間：'+ result[i]["營運時間"] + '</li>\
+                <li>停車費用平日：'+ result[i]["停車費用平日"] + '</li>\
+                <li>停車費用假日：'+ result[i]["停車費用假日"] + '</li>\
+                <li>計費基準：'+ result[i]["計費基準"] + '</li>\
+                <li>補充說明：'+ result[i]["補充說明"] + '</li>\
+                <li>月租：'+ result[i]["月租"] + '</li>\
+                <li>備註說明：'+ result[i]["備註說明"] + '</li>\
+              </ul> <a href="http://www.google.com/maps?q='+ result[i]["停車場地址"] + '" target="_blank">' + result[i]["停車場地址"] + '</a>\
+            </div>\
+          </div>';
+          $("<div></div>")
+            .addClass("col-xs-3 col-sm-3 col-md-3 col-lg-3")
+            .html(html)
+            .appendTo("#parkingLots");
+        }
+    }, "json");
+
+
 
     // $.ajax({
     //   type: "get",
-    //   url : url,
-    //   dataType : "json"
-
-    //   // error:function(){
-    //   //   alert("Error");       
+    //   url: url,
+    //   dataType: "json",
+    //   success: function (result) {
+    //     for (var i = 0; i < result.length; i++) {
+    //       var html =
+    //         '<div class="panel panel-default" style="height:400px;">\
+    //         <div class="panel-heading">\
+    //           <h3 class="panel-title">'+ result[i]["停車場名稱"] + '</h3>\
+    //         </div>\
+    //         <div class="panel-body">\
+    //           <ul class="list-unstyled">\
+    //             <li>汽車車位數：'+ result[i]["汽車車位數"] + '</li>\
+    //             <li>機車車位數：'+ result[i]["機車車位數"] + '</li>\
+    //             <li>營運時間：'+ result[i]["營運時間"] + '</li>\
+    //             <li>停車費用平日：'+ result[i]["停車費用平日"] + '</li>\
+    //             <li>停車費用假日：'+ result[i]["停車費用假日"] + '</li>\
+    //             <li>計費基準：'+ result[i]["計費基準"] + '</li>\
+    //             <li>補充說明：'+ result[i]["補充說明"] + '</li>\
+    //             <li>月租：'+ result[i]["月租"] + '</li>\
+    //             <li>備註說明：'+ result[i]["備註說明"] + '</li>\
+    //           </ul> <a href="http://www.google.com/maps?q='+ result[i]["停車場地址"] + '" target="_blank">' + result[i]["停車場地址"] + '</a>\
+    //         </div>\
+    //       </div>';
+    //       $("<div></div>")
+    //         .addClass("col-xs-3 col-sm-3 col-md-3 col-lg-3")
+    //         .html(html)
+    //         .appendTo("#parkingLots");
+    //     }
     //   }
-      
-    // })
-
-    $(function () {
-      var $parkingLots = $("#parkingLots");
-      
-      $("<div class='col-xs-3 col-sm-3 col-md-3 col-lg-3'> <h3>s南門</h3>"
-        // "<li>汽車車位數 : </li>"
-        // "<li>機車車位數 : </li>"
-        // "<li>營運時間 : </li>"
-        // "<li>停車費用平日 : </li>"
-        // "<li>停車費用假日 : </li>"
-        // "<li>計費基準: </li>"
-        // "<li>補充說明 : </li>"
-        // "<li>月租 : </li>"
-        // "<li>備用說明 : <li>"
-      )
-
-    });
-
-    var num = 5;
-    var x , y ;
-    function count(){
-      y = document.getElementById("qwe");
-      y.innerHTML = num;
-      num--;
-      
-    }
-
-
-
+    // });
 
   </script>
 </body>
