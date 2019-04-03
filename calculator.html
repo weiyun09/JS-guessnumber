@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="stylesheets/guess02.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>計算機</title>
 </head>
 
@@ -17,8 +19,15 @@
             
         </div> -->
         <div class="col-5 mx-auto">
-            <input type="text" class="form-control text-right mb-1 result" placeholder="結果">
+            <!-- <input type="text" class="form-control text-right mb-1 result" placeholder="結果"> -->
             <input type="text" class="form-control text-right" id="input" placeholder="0">
+        </div>
+
+        <div class="num mt-2">
+            <button type="button" class="btn btn-outline-dark mx-3 px-2 col-2" id="clear"><i
+                    class="fab fa-cuttlefish"></i></button>
+            <button type="button" class="btn btn-outline-dark mx-3 px-2 col-2 backspace"><i
+                    class="fas fa-backspace"></i></button>
         </div>
 
         <div class="num mt-2">
@@ -42,19 +51,78 @@
         <div class="num mt-2">
             <button type="button" class="btn btn-outline-dark mx-2  col-1 input-btn">0</button>
             <button type="button" class="btn btn-outline-dark mx-2  col-1 input-btn">.</button>
-            <button type="button" class="btn btn-outline-dark mx-2  col-1 input-btn">=</button>
+            <button type="button" class="btn btn-outline-dark mx-2  col-1 input-btn" id="eqal">=</button>
             <button type="button" class="btn btn-outline-dark mx-2  col-1 input-ca">/</button>
         </div>
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
     <script>
-        var firstvalue = 0;
-        function calculator(cal) {
+        var input = document.getElementById("input");
+        var firstvalue;
+        var secondvalue;
+        var c = "";
 
-
+        function calculator() { //計算
+            secondvalue = getSecondValue();
+            console.log(c);
+            if (c == "+") {
+                firstvalue += secondvalue;
+            } else if (c == "-") {
+                firstvalue -= secondvalue;
+            } else if (c == "*") {
+                firstvalue *= secondvalue;
+            } else if (c == "/") {
+                if (secondvalue != 0) {
+                    firstvalue /= secondvalue;
+                } else {
+                    var allbtns = document.getElementsByClassName("btn");
+                    for (var i = 0; i < allbtns.length; i++) {
+                        allbtns[i].disabled = "disabled";
+                    }
+                    document.getElementById("clear").disabled = "";
+                    input.innerHTML = "錯誤";
+                    return;
+                }
+            } else {
+                firstvalue = input.innerHTML;
+            }
+            c = "";
+            secondvalue = 0;
+            input.value = Math.round(firstvalue * 100) / 100;
         }
+
+        function inputca() {
+            // 讀取第一個值,
+            firstvalue = parseInt(document.getElementById("input").value);
+            //console.log(firstvalue);
+
+            var input = document.getElementById("input");
+            var text = this.innerHTML;
+            //console.log(text);
+            input.value += text;
+            c = text;
+        }
+
+        function getSecondValue() {
+            // 取得第二個值
+            secondvalue = "";
+            var afterC = input.value.lastIndexOf(c);
+            for (var i = afterC + 1; i < input.value.length; i++) {
+                secondvalue += input.value[i];
+            }
+            return parseFloat(secondvalue.trim());
+        }
+
         function btntoinput() {
             var input = document.getElementById("input");
             var text = this.innerHTML;
@@ -62,31 +130,30 @@
             input.value += text;
             // this = btns[i]
         }
-
-        var btns = document.getElementsByClassName("input-btn");
+            // 每個button加上事件
+        var btns = document.getElementsByClassName("input-btn"); 
         for (var i = 0; i < btns.length; i++) {
             btns[i].onclick = btntoinput;
-            // 每個button加上是鍵
         }
-
-        // +-*/
+            //每個(+-*/)按鈕加上事件
         var ca = document.getElementsByClassName("input-ca");
         for (var i = 0; i < ca.length; i++) {
             ca[i].onclick = inputca;
-            //每個(+-*/)按鈕加上事件
-        }
-        function inputca () {            
-            // 讀取第一個值,
-            firstvalue = document.getElementById("input").value;
-            //console.log(firstvalue);
-            
-            var input = document.getElementById("input");
-            var text = this.innerHTML;
-            //console.log(text);
-            input.value += text;
         }
 
 
+        document.getElementById("eqal").onclick = calculator;
+
+        document.getElementById("clear").onclick = function () {
+            input.value = "";  // 清除按鈕
+            c = "";
+            firstvalue = 0;
+            secondvalue = 0;
+            var allbtns = document.getElementsByName("btn");
+            for (var i = 0; i < allbtns.length; i++) {
+                allbtns[i].disabled = "";
+            }
+        }
 
 
     </script>

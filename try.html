@@ -1,0 +1,175 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>計算機</title>
+</head>
+
+<body class="bg-dark">
+    <div class="container text-center col-4 py-4 text-white mt-5">
+        <h1 class="m-0 py-auto">計算機</h1>
+        <h3>
+            <input id="input" class="text-center text-white bg-dark border-0 my-3" type="text" placeholder="0" value="" readonly />
+        </h3>
+        <ul class="row list-unstyled w-100 mx-auto">
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="1">1</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="2">2</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="3">3</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 cc" id="add" value="+">+</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="4">4</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="5">5</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="6">6</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 cc" id="sub" value="-">-</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="7">7</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="8">8</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="9">9</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 cc" id="mul" value="x">x</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 input-pad" value="0">0</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50" id="point" value=".">.</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50" id="calc">=</button></li>
+            <li class="col-3 mb-3"><button type="button" class="btn btn-outline-light w-50 cc" id="div" value="/">/</button></li>
+        </ul>
+        <div class="mb-2">
+            <button type="button" class="btn btn-outline-light" id="clear">Clear</button>
+        </div>
+        <div>
+            <span>因為算精準要細寫數學的判別公式<br />所以為了大致準確，小數點第二位後會四捨五入<br />可用鍵盤輸入各自按紐<br />focus在按鈕之外，Enter為 "="按鈕<br />Backspace為清除<br />此計算機可以連續輸入</span>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        var inputElement = document.getElementById("input");
+        var firstNumber = 0.0;
+        var secondNumber;
+        var cc = "";
+
+        function calculate() { //已經把按鈕綁上事件，剩下計算
+            secondNumber = getSecondNumber();
+            if (isNaN(firstNumber)) firstNumber = 0;
+            if (isNaN(secondNumber) && (cc == "x" || cc == "/")) {
+                secondNumber = 1;
+            } else if (isNaN(secondNumber)) {
+                secondNumber = 0;
+            }
+            console.log(firstNumber);
+            console.log(cc);
+            console.log(secondNumber);
+            if (cc == "+") {
+                firstNumber += secondNumber;
+            } else if (cc == "-") {
+                firstNumber -= secondNumber;
+            } else if (cc == "x") {
+                firstNumber *= secondNumber;
+            } else if (cc == "/") {
+                if (secondNumber != 0) {
+                    firstNumber /= secondNumber;
+                } else {
+                    var allButtons = document.getElementsByClassName("btn");
+                    for (var i = 0; i < allButtons.length; i++) {
+                        allButtons[i].disabled = "disabled";
+                    }
+                    document.getElementById("clear").disabled = "";
+                    inputElement.value = "無法除以零";
+                    return;
+                }
+            } else {
+                firstNumber = inputElement.value;
+            }
+            cc = "";
+            secondNumber = 0;
+            inputElement.value = Math.round(firstNumber * 100) / 100; //四捨五入小數點第二位
+        }
+
+        function getSecondNumber() { //取得第二個數字
+            var secondNumber = "";
+            var afterCC = inputElement.value.lastIndexOf(cc);
+            for (var i = afterCC + 1; i < inputElement.value.length; i++) {
+                secondNumber += inputElement.value[i];
+            }
+            return parseFloat(secondNumber.trim());
+        }
+        //--------------------------以下為按鈕事件-----------------------
+        function inputNumberButton() { //讓按鈕對應到自己的value
+            inputElement.value += this.value;
+        }
+        var numberButtons = document.getElementsByClassName("input-pad");
+        for (var i = 0; i < numberButtons.length; i++) {
+            numberButtons[i].onclick = inputNumberButton;
+            numberButtons[i].onkeyup = function(event) {
+                if (event.keyCode == (48 + i)) {
+                    this.onclick;
+                }
+            }
+        }
+        document.getElementById("calc").onclick = calculate();
+        document.getElementById("point").onclick = inputNumberButton();
+        document.getElementById("clear").onclick = function() {
+            inputElement.value = "";
+            cc = "";
+            firstNumber = 0;
+            secondNumber = 0;
+            var allButtons = document.getElementsByClassName("btn");
+            for (var i = 0; i < allButtons.length; i++) {
+                allButtons[i].disabled = "";
+            }
+        }
+
+        function inputCCButton() {
+            if (cc != "") { //讓使用者可以連續輸入cc
+                calculate();
+            }
+            firstNumber = parseFloat(inputElement.value); //在按下cc後，代表第一個想輸入的數字輸入完了，所以即可儲存。
+            inputElement.value += " " + this.value + " ";
+            cc = this.value;
+        }
+
+        function addCC() {
+            var ccButtons = document.getElementsByClassName("cc");
+            for (var i = 0; i < ccButtons.length; i++) {
+                ccButtons[i].onclick = inputCCButton;
+            }
+        }
+        addCC();
+        document.onkeyup = function(event) {
+            if (event.key >= 0 && event.key <= 9) { //鍵盤輸入0~9
+                inputElement.value += event.key;
+            }
+            if (event.key == "+") {
+                document.getElementById("add").click();
+            }
+            if (event.key == "-") {
+                document.getElementById("sub").click();
+            }
+            if (event.key == "*") {
+                document.getElementById("mul").click();
+            }
+            if (event.key == "/") {
+                document.getElementById("div").click();
+            }
+            if (event.keyCode == 13) {
+                document.getElementById("calc").click();
+            }
+            if (event.keyCode == 8) {
+                document.getElementById("clear").click();
+            }
+            if (event.key == ".") {
+                document.getElementById("point").click();
+            }
+        }
+    </script>
+</body>
+
+</html>
